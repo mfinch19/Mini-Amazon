@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="main">
+    {% if current_user.is_authenticated %}
+    <h2 style="margin-top: 2vh; margin-bottom: 2vh;">{{ current_user.firstname }}'s Cart:</h2>
+    <h5 style="font-size: 24px">Current balance: <b>${{ current_user.balance }}</b></h5>
+    <h5><i>Special Promotion: Use code BLACK FRIDAY for 10% discount (promotion code can be applied only once on a product)</i></h5>
+    <table class="table table-light table-striped table-hover container">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">Seller ID</th>
+        <th scope="col">Product ID</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Product Page</th>
+        <th scope="col">Delete</th>
+        <th scope="col">Save For Later</th>
+        <th scope="col">Update Quantity</th>
+        <th scope="col">Apply Promotion</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for cart in cart_content %}
+        <tr>
+        <onclick="window.location.href='{{ url_for('products.productPage', id = cart.product_id, page=0)}}'">
+        <td>{{ cart.seller_id }}<onclick="window.location.href='{{ url_for('products.productPage', id = cart.product_id, page = 0)}}'"></td>
+        <td>{{ cart.product_id }}</td>
+        <td>{{ cart.quantity }}</td>
+        <td>{{ cart.price_per_item }}</td>
+        <td><form action="{{ url_for('products.productPage', id = cart.product_id, page = 0) }}" method="POST">
+            <button class = "button" type="submit">Product Page</button>
+        </form></td>
+        <td><form action="{{ url_for('cartRouter.delete_cart_element', user_id=cart.user_id, seller_id=cart.seller_id, product_id=cart.product_id) }}" method="POST">
+            <button class = "button" type="submit">Delete</button>
+        </form></td>
+        <td><form action="{{ url_for('cartRouter.save_for_later', user_id=cart.user_id, seller_id=cart.seller_id, product_id=cart.product_id) }}" method="POST">
+            <button class = "button" type="submit">Save For Later</button>
+        </form></td>
+        <td><form action="{{ url_for('cartRouter.update_cart_quantity', user_id=cart.user_id, seller_id=cart.seller_id, product_id=cart.product_id) }}" method="POST">
+            <label for="quantity">New Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required step=1 min=1 >
+            <input type="submit" value="Update">
+        </form></td>
+        <td><form action="{{ url_for('cartRouter.apply_promo_product', user_id=cart.user_id, seller_id=cart.seller_id, product_id=cart.product_id) }}" method="POST">
+            <label for="quantity">Apply Code:</label>
+            <input type="text" id="code" name="code">
+            <input type="submit" value="Apply">
+        </form></td>
+    </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <h5 style="font-size: 24px">Total Price: <b>${{ total_price }}</b></h5>
+    <form action="{{ url_for('cartRouter.apply_promo_cart', user_id=current_user.id) }}" method="POST">
+        <label for="quantity">Promo Code:</label>
+        <input type="text" id="code" name="code">
+        <input type="submit" value="Apply">
+    </form>
+    <form action="{{ url_for('cartRouter.purchase_from_cart', user_id = current_user.id) }}" method="POST">
+        <button class = "btn btn-outline-primary inner_button" type="submit">Submit Order</button>
+    </form>
+    <br><br>
+    <h3> Saved For Later </h3>
+
+    <table class="table table-light table-striped table-hover container">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Seller ID</th>
+            <th scope="col">Product ID</th>
+            <th scope="col">Price</th>
+            <th scope="col">Product Detail</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Add to Cart</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart in saved_content %}
+            <tr>
+            <td>{{ cart.seller_id }}</td>
+            <td>{{ cart.product_id }}</td>
+            <td>{{ cart.price_per_item }}</td>
+            <td><form action="{{ url_for('products.productPage', id = cart.product_id, page = 0) }}" method="POST">
+                <button class = "button" type="submit">Product Page</button>
+            </form></td>
+            <td><form action="{{ url_for('cartRouter.delete_cart_element', user_id=cart.user_id, seller_id=cart.seller_id, product_id=cart.product_id) }}" method="POST">
+                <button class = "button" type="submit">Delete</button>
+            </form></td>
+            <td><form action="{{ url_for('cartRouter.update_cart_quantity', user_id=cart.user_id, seller_id=cart.seller_id, product_id=cart.product_id) }}" method="POST">
+                <label for="quantity">Add to Cart:</label>
+                <input type="number" id="quantity" name="quantity" required step=1 min=1 >
+                <input type="submit" value="Add">
+            </form></td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+        </table>
+
+    
+    {% else %}
+    <div>
+    <p><a href="{{ url_for('users.register') }}" class="btn btn-dark" role="button">Register</a>&nbsp;<a href="{{ url_for('users.login') }}" class="btn btn-dark" role="button">Log in</a></p>
+    </div>
+    {% endif %}
+</div>
+
+<br><br>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Mini Amazon</title>
+  <script type="text/javascript" src="../static/javascript/dropdown.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/example.css') }}">
+  <style>
+  body {
+    font-family: "Lato", sans-serif;
+  }
+
+  .main-head {
+    height: 150px;
+    background: #FFF;
+  }
+
+  .sidenav {
+    height: 100%;
+    background-color: #373F51;
+    overflow-x: hidden;
+    /* overflow: visible; */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+
+  .sidenav input {
+    margin-top: 2vh;
+    padding-left: 5px;
+    border-radius: 5px;
+  }
+
+  .main {
+    padding: 0px 10px;
+  }
+
+  .login-main-text {
+    margin-top: 20%;
+    padding: 60px;
+    color: #FFF;
+  }
+
+  .login-main-text h2 {
+    font-weight: 300;
+  }
+
+  .btn-black {
+    background-color: #000 !important;
+    color: #fff;
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #373F51;
+    color: #A9BCD0;
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="sidenav">
+    {% block msg %}
+    <h1 style="color:white; float: left; padding-right: 3vw;"><a href="{{ url_for('index.index') }}" style="text-decoration: inherit; color: inherit;">Mini Amazon</a></h1>
+
+    <div style="color:black; text-align: right; margin-bottom: 25px; float: right;">
+      {% if current_user.is_authenticated %}
+
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false">
+          Hi {{ current_user.firstname }}!
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+          <p class="dropdown-item" style="font-size: 16px">Current balance: <b>${{ current_user.balance }}</b></p>
+          <a class="dropdown-item" href="{{ url_for('index.profile') }}">View Profile</a>
+          <a class="dropdown-item" href="{{ url_for('index.cart_page') }}">View Cart</a>
+          <a class="dropdown-item" href="{{ url_for('users.view_balance') }}">Edit Balance</a>
+          <a class="dropdown-item" href="{{ url_for('index.purchase_history') }}">Order History</a>
+          <a class="dropdown-item" href="{{ url_for('index.reviews_landing', order_id='nav') }}">Review History</a>
+          <a class="dropdown-item" href="{{ url_for('index.inventory', page=0) }}">Your Inventory</a>
+          <a class="dropdown-item" href="{{ url_for('index.seller_history') }}">Seller History</a>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> 11319801453e9fbe12b832367c864522a25d555b
+=======
+          <a class="dropdown-item" href="{{ url_for('users.logout') }}" >Log out</a>
+>>>>>>> 75820b3cdd2d511826ade78b6c5739ac93c04a62
+        </div>
+      </div>
+      
+      {% else %}
+      <a href="{{ url_for('users.login') }}" type="button" class="btn btn-light">Log in</a>
+      {% endif %}
+    </div>
+    {% endblock %}
+  </div>
+  <div class="main">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+
+</html>

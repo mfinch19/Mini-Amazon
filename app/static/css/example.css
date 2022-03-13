@@ -1,0 +1,79 @@
+section {
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  display: table;
+  width: 100%;
+}
+
+.left-half {
+  background-color: #ff9e2c;
+  position: absolute;
+  left: 0px;
+  width: 50%;
+}
+
+.right-half {
+  background-color: #b6701e;
+  position: absolute;
+  right: 0px;
+  width: 50%;
+}
+
+.inner_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:35px;
+  width:100%;
+}
+
+.btn btn-secondary dropdown-toggle {
+  display: none;
+  position: relative;
+  color: black;
+  font-size: 13px;
+  right: 0;
+  overflow: auto;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+td a {
+  display: block;
+  border: 1px solid black;
+  padding: 16px;
+}
+
+b-card.p-review {
+  border: 1px solid black;
+}
+
+.card-body:hover {
+  background-color: #373F51;
+  opacity: 0.6;
+  cursor: pointer;
+  color: white;
+}
+
+.table:hover {
+  cursor: pointer;
+}
+
+.table p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > div[class*='col-'] {
+ display: flex;
+}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- If coming from purchase history page (can decide what type of review to write for that purchase)-->
+{% if purchase is defined %}
+<h2 style="margin-top: 2vh; margin-bottom: 2vh;">Write Your Review for Purchase ID: {{ purchase.order_id }} </h2>
+<table class="table table-light table-striped table-hover container">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Purchase ID</th>
+      <th scope="col">Product ID</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Seller ID</th>
+      <th scope="col">Total</th>
+      <th scope="col">Status</th>
+      <th scope="col">Date/Time Purchased</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr onclick="window.location.href='{{ url_for('products.productPage', id=purchase.product_id, page = 0)}}'">
+      <th scope="row">{{ purchase.order_id }}</th>
+      <td>{{ purchase.product_id }}</td>
+      <td>{{ purchase.quantity }}</td>
+      <td>{{ purchase.seller_id }}</td>
+      <td>${{ purchase.payment_amount }}</td>
+      <td>{{ purchase.status }}</td>
+      <td>{{ purchase.time_purchased }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card-deck">
+  <div class="card" style="min-width: 18rem;">
+    <div class="card-body" onclick="window.location.href='{{ url_for('reviews.write_review', object_id=product_summary.product_id, type='products')}}'">
+      <h5 class="card-title">Submit review for product '{{ product_summary.name }}'</h5>
+      <p class="card-text">Description: {{ product_summary.description }}</p>
+      <p class="card-text">Average Rating: {{ product_summary.avg_rating }}</p>
+      <p class="card-text"><small class="text-muted">{{ product_summary.reviews }} Total Reviews</small></p>
+    </div>
+  </div>
+  <div class="card" style="min-width: 18rem;">
+    <div class="card-body" onclick="window.location.href='{{ url_for('reviews.write_review', object_id=seller_summary.seller_id, type='sellers')}}'">
+      <h5 class="card-title">Submit review for seller {{ seller_summary.firstname }} {{ seller_summary.lastname }}</h5>
+      <p class="card-text">Total Items Sold: {{ seller_summary.items_sold }}</p>
+      <p class="card-text">Average Rating: {{ seller_summary.avg_rating }}</p>
+      <p class="card-text">Last Sold Item: {{ seller_summary.last_sold.strftime('%Y-%m-%d') }}</p>
+      <p class="card-text"><small class="text-muted">{{ seller_summary.reviews }} Total Reviews</small></p>
+    </div>
+  </div>
+</div>
+<!-- If coming from review history page (can decide what type of reviews to view)-->
+{% else %}
+<h2 style="margin-top: 2vh; margin-bottom: 2vh;">{{ current_user.firstname }}'s Review History:</h2>
+<div class="card-deck">
+  <div class="card" style="min-width: 18rem;">
+    <div class="card-body" onclick="window.location.href='{{ url_for('index.review_history', page=0, type='products')}}'">
+      <h5 class="card-title">Product Reviews</h5>
+      <p class="card-text"><i>View your reviews from products you've purchased</i></p>
+      <p class="card-text">Your Average Rating: {{ prod_stats.avg_rating }}</p>
+      <p class="card-text">Your Last Review: {{ prod_stats.last_review }}</p>
+      <p class="card-text"><small class="text-muted">{{ prod_stats.reviews }} Total Reviews Written</small></p>
+    </div>
+  </div>
+  <div class="card" style="min-width: 18rem;">
+    <div class="card-body" onclick="window.location.href='{{ url_for('index.review_history', page=0, type='sellers')}}'">
+      <h5 class="card-title">Seller Reviews</h5>
+      <p class="card-text"><i>View your reviews for sellers you have purchased from</i></p>
+      <p class="card-text">Your Average Rating: {{ seller_stats.avg_rating }}</p>
+      <p class="card-text">Your Last Review: {{ seller_stats.last_review }}</p>
+      <p class="card-text"><small class="text-muted">{{ seller_stats.reviews }} Total Reviews Written</small></p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<br><br>
+
+{% endblock %}

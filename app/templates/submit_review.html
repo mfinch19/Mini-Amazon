@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Parameters: object_id, type, prev_review, summary, review_submitted, result -->
+<!-- Types: int, string, review obj, review obj, logical, logical -->
+
+<!-- Messages at top of page -->
+<h2 style="margin-top: 2vh; margin-bottom: 2vh;">Write your review for {{ summary.name }}:</h2>
+{% if review_submitted and result == 'Done' %}
+<h5>Successfully completed review for {{ summary.name }}!</h5>
+{% elif review_submitted %}
+<h5>Unable to complete review for {{ summary.name }}, {{ result }}</h5>
+{% endif %}
+
+<!-- Summary tables -->
+<!-- If submitting a product review -->
+{% if type == 'products' %}
+<table class="table table-light table-striped table-hover container">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Product Name</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{ summary.name }}</th>
+      <td>{{ summary.description }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5><i>Summary statistics: </i></h5>
+<table class="table table-light table-striped table-hover container">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Current Sellers</th>
+      <th scope="col">Current Stock</th>
+      <th scope="col">Average Price</th>
+      <th scope="col">Product Reviews</th>
+      <th scope="col">Average Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr onclick="window.location.href='{{ url_for('products.productPage', id=summary.product_id, page = 0)}}'">
+      <th scope="row">{{ summary.sellers }}</th>
+      <td>{{ summary.total_stock }}</td>
+      <td>{{ summary.avg_price }}</td>
+      <td>{{ summary.reviews }}</td>
+      <td>{{ summary.avg_rating }}</td>
+    </tr>
+  </tbody>
+</table>
+<!-- If submitting a seller review -->
+{% else %}
+<table class="table table-light table-striped table-hover container">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Seller Name</th>
+      <th scope="col">Total Items Sold</th>
+      <th scope="col">Last Item Sold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr onclick="window.location.href='{{ url_for('index.pub_view', user_id=summary.seller_id) }}'">
+      <th scope="row">{{ summary.name }}</th>
+      <td>{{ summary.items_sold }}</td>
+      <td>{{ summary.last_sold.strftime('%Y-%m-%d') }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5><i>Summary statistics: </i></h5>
+<table class="table table-light table-striped table-hover container">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Current Product Listings</th>
+      <th scope="col">Current Stock</th>
+      <th scope="col">Average Price</th>
+      <th scope="col">Seller Reviews</th>
+      <th scope="col">Average Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <tr>
+      <th scope="row">{{ summary.products }}</th>
+      <td>{{ summary.total_stock }}</td>
+      <td>{{ summary.avg_price }}</td>
+      <td>{{ summary.reviews }}</td>
+      <td>{{ summary.avg_rating }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endif %}
+
+<form action="{{ url_for('reviews.add_review', object_id=object_id, type=type, update=prev_review.exists) }}" method="POST">
+  <label for="numstars"><b>Your Rating (1-5): </b></label><br>
+  <input type="number" id="numstars" name="numstars" required step=0.1 min=1 max=5 value="{{ prev_review.rating }}"><br><br>
+  <!-- If a review already exists, change label to 'Edit' -->
+  {% if prev_review.exists %}
+  <label for="body"><b>Edit your review for '{{ summary.name }}' (max 256 characters): </b></label><br>
+  {% else %}
+  <label for="body"><b>Write your review for '{{ summary.name }}' (max 256 characters): </b></label><br>
+  {% endif %}
+  <textarea id="body" name="body" rows="4" cols="50" maxlength="256">{{prev_review.description}}</textarea><br><br>
+  <!-- If a review already exists, change button label to 'Update' (default 'Submit') -->
+  {% if prev_review.exists %}
+  <input type="submit" value="Update">
+  {% else %}
+  <input type="submit" value="Submit">
+  {% endif %}
+</form>
+
+<br><br><br>
+
+{% endblock %}

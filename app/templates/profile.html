@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+<div>
+	<h3><b>Your Account</b></h3>
+	{% if reward_status != "Default" %}
+    <h3>Reward Status: <img src="./static/images/gemstone.gif" alt="diamond symbol" height="45"><b> {{ reward_status }} </b><img src="./static/images/gemstone.gif" alt="diamond symbol" height="45"></h3>
+	<p style="max-width: 40vw; color: gray; padding-left: 1vw;"><em>Congratulations on Diamond Shopper reward status! We appreciate your loyalty to our platform and we hope that you enjoy the extra perks!</em></p>
+    {% else %}
+	<h3>Reward Status: <b> {{ reward_status }} </h3>
+	<p style="max-width: 40vw; color: gray; padding-left: 1vw;"><em>Diamond Shopper status is achieved by spending over $10,000 in the trailing twelve months. This reward status unlocks expedited shipping times, special promo codes, and exclusive product drops on Mini Amazon.</em></p>
+    {% endif %}
+</div>
+
+<div class="card-deck">
+	<div class="card" style="min-width: 18rem;">
+	  <div class="card-body" style="background-color: white; color: black; opacity: 1; cursor: auto;">
+		<h5 class="card-title" style="font-size: 32px">Account Info</h5>
+		<h5 class="card-text">Name: {{ current_user.firstname }}  {{ current_user.lastname }}</h5>
+		<h5 class="card-text">Email: {{ current_user.email }}</h5>
+		<h5 class="card-text">Mailing Address: {{ current_user.street }}</h5>
+		<h5 class="card-text">ZIP Code: {{ current_user.zip }}</h5>
+		<h6 class="card-text"><a href="{{ url_for('users.view_account_info') }}">Edit Account Info</a></h6>
+		<h6 class="card-text"><a href="{{ url_for('users.change_password') }}">Change Password</a></h6>
+	  </div>
+	</div>
+	<div class="card" style="min-width: 18rem;">
+	  <div class="card-body" style="background-color: white; color: black; opacity: 1; cursor: auto;">
+		<h5 class="card-title" style="font-size: 32px">Current Snapshot</h5>
+		<br>
+		<h5 class="card-text" style="font-size: 24px">Current balance: <b>${{ current_user.balance }}</b></h5>
+		<h6 class="card-text"><a href="{{ url_for('users.view_balance') }}">Edit Balance</a></h6>
+		<br>
+		<h5 class="card-text" style="font-size: 24px">Products in Cart: <b>{{ cart_quantity }}</b></h5>
+		<h6 class="card-text"><a href="{{ url_for('index.cart_page') }}">View Cart</a></h6>
+		<br>
+	  </div>
+	</div>
+  </div>
+
+  <div style="border-style: solid; border-width: 2px; border-color: #e3e3e3; border-radius: 5px; margin-top: 1%; padding: 1%;">
+	<h5 style="font-size: 24px">Other Helpful Links</h5>
+	<h6><a href="{{ url_for('index.purchase_history') }}">Purchase History</a></h6>
+	<h6><a href="{{ url_for('index.reviews_landing', order_id='nav') }}">Review History</a></h6>
+	<h6><a href="{{ url_for('index.inventory', page=0) }}">Seller Inventory</a></h6>
+	<h6><a href="{{ url_for('index.pub_view', user_id=current_user.id) }}">See My Public User View</a></h6>
+  </div>
+{% endblock %}

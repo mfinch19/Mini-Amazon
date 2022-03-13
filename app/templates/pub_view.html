@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 style="margin-top: 2vh; margin-bottom: 2vh; text-align: center;"><b>{{ user.firstname }} {{ user.lastname }}'s Public Page</b></h2>
+<div class="card-deck">
+  <div class="card" style="min-width: 18rem; max-width: 30rem; margin: auto;">
+    <div class="card-body">
+      <h5 class="card-title"><b>User Info</b></h5>
+      <p class="card-text">Account ID: {{ user.id }}</p>
+      {% if seller_stats.exists %}
+      <p class="card-text">Email: {{ user.email }}</p>
+      <p class="card-text">Address: {{ user.street }}, {{ user.zip }}</p>
+      {% else %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="card-deck">
+  <div class="card" style="min-width: 18rem; max-width: 30rem; margin: auto; margin-top: 2vh;">
+    <div class="card-body" onclick="window.location.href='{{ url_for('index.review_history', page=0, type='seller_history', id=user.id)}}'">
+      {% if seller_stats.avg_rating == "No reviews" %}
+      <p class="card-text"><em>User has not sold any items yet.</em></p>
+      {% else %}
+      <h5 class="card-title"><b>Seller Reviews for {{ user.firstname }} {{ user.lastname }}</b></h5>
+      <p class="card-text">Average Rating: {{ seller_stats.avg_rating }}</p>
+      <p class="card-text">Last Review: {{ seller_stats.last_review }}</p>
+      <p class="card-text"><small class="text-muted">{{ seller_stats.reviews }} Total Reviews</small></p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<h3>Products sold by {{user.firstname + ' ' + user.lastname}}</h3>
+<table class="table table-light table-striped table-hover container">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Seller ID</th>
+      <th scope="col">Seller Name</th>
+      <th scope="col">Product</th>
+      <th scope="col">Price</th>
+      <th scope="col">Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for inventory in seller_products %}
+    <tr>
+      <tr onclick="window.location.href='{{ url_for('products.productPage', id=inventory.product_id ,page=0)}}'">
+      <th scope="row">{{ inventory.seller_id }}</th>
+      <td>{{ inventory.lastname + ", " + inventory.firstname }}</td>
+      <td>{{ inventory.prod_name }}</td>
+      <td>{{ inventory.price }}</td>
+      <td>{{ inventory.stock }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+
+<br><br>
+
+{% endblock %}

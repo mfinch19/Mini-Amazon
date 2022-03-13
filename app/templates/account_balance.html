@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="border-style: solid; border-width: 2px; border-color: #e3e3e3; border-radius: 5px; margin-top: 1%; padding: 1%;">
+  <h5><b>Your Account Balance:</b> ${{ current_user.balance }}</h5>
+  <button style="color: black; background-color: #ffd812; border-color: #ffd812;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#reloadBalanceModal">Reload Balance</button>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#withdrawBalanceModal">Withdraw Balance</button>
+</div>
+
+<!-- Reload Balance modal -->
+
+<div class="modal fade" id="reloadBalanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="{{ url_for('users.add_balance') }}" method="POST">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Reload Balance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Add money to your account in order to fund purchases.</p>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Payment Method</label>
+          </div>
+          <select required class="custom-select" id="inputGroupSelect01">
+            <option selected value="">Choose...</option>
+            <option value="1">Credit Card</option>
+            <option value="2">Debit Card</option>
+            <option value="3">Bank Account</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-top: 2%;">
+          <label for="add-amount" class="control-label"><b>Specify amount to add:</b></label>
+          <input required name="add-amount" type="number" max="10000.00" min="0.00" step="0.01" id="add-amount" class="form-control" autofocus="autofocus" placeholder="0.00"/>
+          <p style="color: rgb(196, 196, 196); font-size: smaller; padding-top: 0.5%;">Note: Only $10,000.00 can be added in a single deposit. Do not use commas in deposit quantity.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="confirm-deposit" style="background-color: green; border-color: green;">Confirm Deposit</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Withdraw Balance modal -->
+
+<div class="modal fade" id="withdrawBalanceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="{{ url_for('users.withdraw_balance') }}" method="POST">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Withdraw Balance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You can withdraw up to ${{ current_user.balance }} from your account. It may take up to 48 hours for the transfer to process and be reflected in your bank account.</p>
+        <div class="form-group">
+          <label for="withdrawal-amount" class="control-label"><b>Specify withdrawal amount:</b></label>
+          <input required name="withdrawal-amount" type="number" max={{current_user.balance}} min="0.00" step="0.01" id="withdrawal-amount" class="form-control" autofocus="autofocus" placeholder="0.00"/>
+          <p style="color: rgb(196, 196, 196); font-size: smaller; padding-top: 0.5%;">Note: if the amount is greater than the current balance of the account, the withdrawal will simply be equal to the current balance.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="confirm-withdrawal">Confirm Withdrawal</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

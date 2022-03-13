@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Thank you for contributing to the marketplace!</h2>
+
+<br><br>
+
+<h3>Enter New Product Details:</h3>
+
+<form action="{{ url_for('products.add_new_product') }}" method="post"> 
+    <div class="form-group">
+        <label for="cat_name">Category:</label>
+        <select required class="form-control" aria-label="Default select example" name="cat_name" id="cat_name">
+    
+            {% for cat in categories %}
+            <option value="{{cat.cat_name}}">{{cat.cat_name}}</option>
+            {% endfor %}
+        </select>
+        
+        <small id="cat_name" class="form-text text-muted">Choose a category for your item to be listed under</small>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input required type="text" class="form-control" id="name" name="name">
+      <small id="name" class="form-text text-muted">The name for the item to be listed under</small>
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea required class="form-control" id="description" name="description" rows="3"></textarea>
+        <small id="description" class="form-text text-muted">Enter a brief description of the item</small>
+    </div>
+
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input required step="0.01" type="number" class="form-control" min='0.01' id="price" name="price">
+        <small id="price" class="form-text text-muted">Price of item (to two decimals max)</small>
+    </div>
+
+    <div class="form-group">
+        <label for="Stock">Quantity? </label>
+        <input required type="number" name="stock" min="1">
+        <small id="stock" class="form-text text-muted">How many of this item are you listing at this time?</small>
+    </div>
+
+
+    <div class="form-group">
+        
+        <label for="image">Image URL:</label>
+        <input disabled type="text" class="form-control" placeholder="URL for image" id="image" name="image">
+        <input type="hidden" name="image" id="image" value="0" />
+        <small id="image" class="form-text text-muted">If you have an image of the product, please list a URL to it here!</small>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="yes" onclick="document.getElementById('image').disabled=!this.checked;">
+            <label class="form-check-label" for="yes">
+              Included image
+            </label>
+          </div>
+      </div>
+
+    <button type="submit" class="btn btn-primary">Add Product!</button>
+  </form>
+
+  
+
+
+
+<br><br><br>
+
+{% endblock %}

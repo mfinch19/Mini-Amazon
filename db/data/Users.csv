@@ -1,0 +1,5 @@
+1,joe.d@gmail.com,pbkdf2:sha256:150000$ahyrwGkA$4ca1d57dfa0fd414cd3c5c715c5ac4f97dcf8c75f7ad01f1849ca1575e03ac8e,Joe,D,45
+2,aj@aol.com,pbkdf2:sha256:150000$pj07MpN8$f7399a32a75cf32b377c572fb0bcb1a55a0013f8d6bd65d6ec9acb4c6be104ef,AJ,F,100
+3,amy@comcast.net,pbkdf2:sha256:150000$0spomnjL$69f35e7f7da3f1367870118c411f1887c9993629ccbb73aba369463376188960,Amy,S,35.09
+4,jacob@gmail.com,pbkdf2:sha256:150000$iOwbPlXY$ede0f74b1cff79d16d4c79705acafe5ceafd6b8ffefd1a9ff51790d3e1e5fdb5,Jacob,M,87.64
+5,mike@aol.com,pbkdf2:sha256:150000$ZAXME4As$53f035b8e943fdce72b9b5c35ba5e625b3131c9d6407f71be37e42659853178f,Michael,G,46.59

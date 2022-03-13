@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+<a href="{{ url_for('index.inventory') }}">Back to Inventory</a>
+<br>
+
+<h2> {{product.name}} </h2>
+
+
+
+<!-- 
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Sellers
+    </button>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for seller in sellers %}
+        <div class="dropdown-item">
+          {{seller.firstname}} {{seller.lastname}} <small class="text-muted">(Stock: {{seller.stock}})</small>
+          <br>
+        {% if current_user.is_authenticated %}
+        <input type="number" name="{{seller.id}}"
+               min="0" max="{{seller.stock}}"> </a>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <a href="#">Add to Cart</a>
+        {% endif %}
+        </div>
+
+      {% endfor %}
+    </div>
+  </div>
+<div style="text-align: center">
+
+		<h2> {{product.name}} </h2>
+        <h2> {{avg_rating}} Stars </h2>
+        <p>ID: {{product.id}}</p>
+		{% if sellers[0].stock > 0 %}
+		    <h5 style="font-size: 24px; color:green"> Your Stock: {{sellers[0].stock}}</h5>
+        {% else %}
+            <h5 style="font-size: 24px; color:red"> Out of Stock </h5>
+        {% endif %}
+		<h5>Category: {{product.cat_name}}</h5>
+		<h5>Your Price: ${{sellers[0].price}}</h5>
+    <h5>Description: {{product.description}}</h5>
+</div>
+		<h5>Reviews: </h5>
+        {% if reviews %}
+        <div class="card-deck">
+        {% for review in reviews %}
+            <div class="card" style="max-width: 18rem;">
+              <div class="card-body" onclick="window.location.href='{{ url_for('index.review_history', page=0, type='product_history', product_id=product.id)}}'">
+                <h5 class="card-title">Rating: {{review.rating}}</h5>
+                <p class="card-text">User: {{review.firstname}} {{review.lastname}} </p>
+                <p class="card-text">Description: {{review.description}}</p>
+                <p class="card-text"><small class="text-muted">{{review.date_time}}</small></p>
+              </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        {% endif %} -->
+
+{% endblock %}

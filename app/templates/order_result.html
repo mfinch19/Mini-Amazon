@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="main">
+	{% if type == 'sucess' %}
+		<h2 style="margin-top: 2vh; margin-bottom: 2vh;">Your Order Has Been Sucessfully Submitted</h2>
+        <h4 style="margin-top: 2vh; margin-bottom: 2vh;">Please Check Order History for Delivery Updates</h4>
+        <form action="{{ url_for('index.purchase_history') }}" method="GET">
+            <button class = "btn btn-outline-primary inner_button" type="submit">Order History</button>
+        </form>
+	{% elif type == 'balance' %}
+		<h2 style="margin-top: 2vh; margin-bottom: 2vh;">Your Order Cannot be Processed</h2>
+        <h4 style="margin-top: 2vh; margin-bottom: 2vh;">You Do Not Have Enough Balance: Please Add Balance and Try Again</h4>
+
+        
+	{% elif type == 'stock' %}
+		<h2 style="margin-top: 2vh; margin-bottom: 2vh;">Your Order Cannot be Processed</h2>
+        <h4 style="margin-top: 2vh; margin-bottom: 2vh;">One or More Products In Your Purchase Is Out of Stock</h4>	{% endif %}
+        <form action="{{ url_for('index.cart_page') }}" method="GET">
+            <button class = "btn btn-outline-primary inner_button" type="submit">Return to Cart</button>
+        </form>
+
+</div>
+
+<br><br>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+<a href="{{ url_for('index.createProduct') }}">Add a different product</a>
+<br>
+
+<!-- {%if editing != null%}
+<h2>EDITING</h2>
+{%endif%} -->
+
+
+<form action="{{ url_for('products.write_product', id=product.id, mode=mode) }}" method="POST">
+  <div class="row">
+    <div class="col-sm-6">
+      {% if error %}
+      <h3>There was an error in adding your product. Please make sure you are inputting positive numbers only</h3>
+      {% endif %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Product </th>
+            <th scope="col">Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{product.name}}</td>
+          </tr>
+          <tr>
+            <td>Stock</td>
+            <td>
+              <label for="stock"></label>
+              {%if editing != null%}
+              <textarea id="stock" name="stock" rows="1" cols="15" maxlength="10">{{seller_product[0]}}</textarea>
+              {%else%}
+              <textarea id="stock" name="stock" rows="1" cols="15" maxlength="10"></textarea>
+              {%endif%}
+            </td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>
+              <label for="price"></label>
+              {%if editing != null%}
+              <textarea id="price" name="price" rows="1" cols="15" maxlength="10">{{seller_product[1]}}</textarea>
+              {%else%}
+              <textarea id="price" name="price" rows="1" cols="15" maxlength="10"></textarea>
+              {%endif%}
+
+              {%if price != null%}
+              <b>{{price}}</b>
+              {% endif %}</td>
+          </tr>
+          <tr>
+            <td>Category</td>
+            <td>{{product.cat_name}}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>{{product.description}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  {%if editing != null%}
+  <input type="submit" value="Edit Product">
+  {%else%}
+  <input type="submit" value="Add Product">
+  {%endif%}
+
+</form>
+<br><br><br>
+
+
+
+{% endblock %}

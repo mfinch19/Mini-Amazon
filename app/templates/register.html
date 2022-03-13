@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 style="text-align: center; padding-top: 2%;">Start Shopping in Under a Minute...</h1>
+<p style="text-align: center; padding-top: 2%;">Fill out this brief registration form in order to create an account on Mini Amazon <br> and begin shopping from the world's greatest selection of goods!</p>
+<div style="max-width: 60%; margin: auto;">
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.firstname.label }}<br/>
+      {{ form.firstname(size=32) }}<br/>
+      {% for error in form.firstname.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.lastname.label }}<br/>
+      {{ form.lastname(size=32) }}<br/>
+      {% for error in form.lastname.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.mailingaddress.label }}<br/>
+      {{ form.mailingaddress(size=32) }}<br/>
+      {% for error in form.mailingaddress.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.zipcode.label }}<br/>
+      {{ form.zipcode(size=32) }}<br/>
+      {% for error in form.zipcode.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.email.label }}<br/>
+      {{ form.email(size=64) }}<br/>
+      {% for error in form.email.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.password.label }}<br/>
+      {{ form.password(size=32) }}<br/>
+      {% for error in form.password.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.password2.label }}<br/>
+      {{ form.password2(size=32) }}<br/>
+      {% for error in form.password2.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p style="text-align: center;">{{ form.submit() }}</p>
+  </form>
+</div>
+
+{% endblock %}
